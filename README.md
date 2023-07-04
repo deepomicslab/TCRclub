@@ -28,12 +28,12 @@ TCRclub includes a VAE model for converting CDR3β sequences into embeddings. To
 TCRclub requires two files to identify functional-similar clubs for T cells. The first column of both files should be named "barcode", with each element being unique. Each row represents a single T cell, and the order of T cells should be the same in both files.
 
 For the sc-TCR sequences file, two columns are necessary: "barcode" and "cdr3". If the file contains cells from multiple samples, you should include a column labeled "sample" to indicate the source of each T cell.
-![Image text](https://github.com/deepomicslab/TCRclub/blob/ab0b9ad869b7b0a47ab6fc95d23e34e3b3960bb4/img/required_tcr_file.png)
+![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/required_tcr_file.png)
 
 **Fig.1** An example of required scTCR file in .csv format.
 
 For the sc-RNA expression file, each row corresponds to a T cell, and the columns (except the first column) correspond to genes. We suggest using the top 10% highly expressed genes extracted from the original sc-RNA expression file. You can select the input genes according to your own criteria. Normalization and log-transformation are recommended. Be cautious with selecting too many genes, as it may cause GPU memory issues.
-![Image text](https://github.com/deepomicslab/TCRclub/blob/ab0b9ad869b7b0a47ab6fc95d23e34e3b3960bb4/img/required_rna_file.png)
+![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/required_rna_file.png)
 
 **Fig.2** An example of required scRNA expression file in .csv format.
 
@@ -69,4 +69,7 @@ If you choose the fixed_initialization option, run python script [TCRclub.py](TC
 
 `python3 TCRclub.py --tcr_file ./example_data/example_tcr.csv --rna_file ./example_data/example_rna.csv --fixed_initialization --repeat_times 1`
 
-The T-cell clubs will be saved in the "consensus_result.csv" file within the output directory specified by the *out* parameter. The output file will include a new column named "club" in the input TCR file, where T cells with the same club ID are considered to belong to the same club. 
+The T-cell clubs will be saved in the "consensus_result.csv" file within the output directory specified by the *out* parameter. The output file will include a new column named "club" in the input TCR file, where T cells with the same club ID are considered to belong to the same club.
+![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/example_result_file.png)
+**Fig.3** An example of the produced result in .csv format.
+
