@@ -97,7 +97,6 @@ class TCRclub():
             for i in (set(ref_indices)&set(indices[row].cpu().numpy())):
                 C[row][i] = 1
         
-        #C.fill_diagonal_(0) #revise here
 
         return C
         
@@ -156,22 +155,6 @@ class TCRclub():
         values, indices = similarity.topk(self.k, dim=1, largest=False)
         for i in np.arange(similarity.shape[0]):
             self.C[i, indices[i]] = 1
-
-        self.undirected_C(similarity)
-    
-    def undirected_C(self, similarity):
-
-        temp_C = self.C + self.C.T
-        temp_C[temp_C>1] = 1
-
-        values, indices = similarity.topk(self.k, dim=1, largest=False)
-        self.C.zero_()
-
-        for row, temp_s in enumerate(temp_C):
-            ref_indices = torch.nonzero(temp_s).reshape(-1).cpu().numpy()
-            for i in (set(ref_indices)&set(indices[row].cpu().numpy())):
-                self.C[row][i] = 1
-        #self.C.fill_diagonal_(0)
 
 
     def optim_W(self):

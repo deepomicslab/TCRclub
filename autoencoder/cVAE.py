@@ -30,6 +30,16 @@ K.set_image_data_format('channels_last')
 tf.compat.v1.disable_eager_execution()
 import pickle, re
 
+amino_acids=['A','R','N','D','C','Q','E','G','H','I','L','K','M','F','P','S','T','W','Y','V','-']
+def amino_onehot_encoding(seqs, aa=amino_acids, max_length=40):
+    n=len(seqs)
+    matrix=zeros((n,max_length,21),dtype=int8)
+    for x in range(n):
+        seq=seqs[x]+(max_length-len(seqs[x]))*'-'
+        for i in range(max_length):
+        #for i in range(len(seq)):
+            matrix[x][i][aa.index(seq[i])] = 1
+    return matrix
 
 class Sampling1(Layer):
     """Uses (z_mean, z_log_var) to sample z, the vector encoding a digit."""
