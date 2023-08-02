@@ -348,7 +348,7 @@ if __name__ == '__main__':
     consensus_judge = {}
     combined_clusters = []
 
-
+    results = dict(sorted(results.items(), key=lambda x: x[1]["loss]))
     top_results = {k:v for i, (k, v) in enumerate(results.items()) if i in range(0,args.con_topk)}
     
     consensus_matrix = np.zeros((len(clustered_idx),len(clustered_idx)))
