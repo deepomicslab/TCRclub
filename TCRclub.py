@@ -245,7 +245,7 @@ if __name__ == '__main__':
 
     #load the autoencoder
     K.clear_session()
-    model = keras.models.load_model("autoencoder/new_classifier_k_20_lambda_1_softmax_adam_blosum_20epoch.h5",
+    model = keras.models.load_model("autoencoder/TCRclub_embedding.h5",
             custom_objects={'Sampling1':Sampling1,'CenterLossLayer':CenterLossLayer}, compile=False).layers[2]
     T = model.predict(onehot)
     cuda.select_device(0)
@@ -348,7 +348,7 @@ if __name__ == '__main__':
     consensus_judge = {}
     combined_clusters = []
 
-
+    results = dict(sorted(results.items(), key=lambda x: x[1]["loss"]))
     top_results = {k:v for i, (k, v) in enumerate(results.items()) if i in range(0,args.con_topk)}
     
     consensus_matrix = np.zeros((len(clustered_idx),len(clustered_idx)))
