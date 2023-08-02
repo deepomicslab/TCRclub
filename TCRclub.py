@@ -226,13 +226,14 @@ if __name__ == '__main__':
     if not os.path.exists(args.out):
         os.mkdir(args.out)
 
-    #load the autoencoder
+    #load the encoder
     K.clear_session()
     model = keras.models.load_model("autoencoder/TCRclub_embedding.h5",
             custom_objects={'Sampling1':Sampling1,'CenterLossLayer':CenterLossLayer}, compile=False).layers[2]
     T = model.predict(onehot)
     cuda.select_device(0)
     cuda.close()
+    print("TCR embeddings are prepared.")
 
     #obtain the pair-wise expression distances between TCR clones:RR
     R = np.float32(rna_file.values)
@@ -255,13 +256,9 @@ if __name__ == '__main__':
     
     TCR = torch.from_numpy(T/np.std(T,axis=0))
     RNA = torch.from_numpy(filter_RR)
-    
-    inputs = {}
-    inputs['TCR'] = TCR.numpy()
-    inputs['RR'] = RNA.numpy()
-    #np.save(os.path.join(args.out, "inputs.npy"), inputs)
 
     results = defaultdict(dict)
+    print("Starting clustering")
     for repeat_time in np.arange(args.repeat_times):
         epochs = 1000
         clubproducer = TCRclub(TCR, RNA, k=args.k, alpha=args.alpha, beta=args.beta, fixed_ini=args.fixed_initialization)
@@ -315,8 +312,6 @@ if __name__ == '__main__':
             groups.append(np.argwhere(np.array(label) == i).reshape(-1))
         results[repeat_time]['clustering_result'] = groups
         
-
-    #np.save(os.path.join(args.out, "k{}_maxk{}_beta{}.npy".format(args.k, args.k, args.beta)), results)
     
     tcr_file = tcr_file.reset_index()
     out_file = tcr_file.copy()
@@ -336,7 +331,6 @@ if __name__ == '__main__':
     
     consensus_matrix = np.zeros((len(clustered_idx),len(clustered_idx)))
     for key, values in top_results.items():
-        #print("cluster purity:", len(sum([list(cluster) for cluster in values["clustering_result"] if len(cluster)>1], []))/len(unique_tcr_file))
         for cluster in values["clustering_result"]:
             for a in np.arange(len(cluster)):
                 consensus_matrix[cluster[a]][cluster[a]] += 1
@@ -357,5 +351,7 @@ if __name__ == '__main__':
 
     if args.multiple_sample:
         out_file['cdr3'] = out_file['cdr3'].str.replace(':.*', '', regex=True)
+    
+    print("Output file is ready.")
     out_file.to_csv(os.path.join(args.out, "consensus_result.csv"), index=False)
 
