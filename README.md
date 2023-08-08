@@ -15,7 +15,7 @@ To run TCRclub successfully, we recommend installing the following Python packag
 * pandas (version 1.3.5)
 * scanpy (version 1.9.1)
 * numba (version 0.54.1)
-* pyseat (version 0.0.1.3)
+* pyseat (version 0.0.1.4)
 
 [pySEAT](https://github.com/deepomicslab/SEAT) can be installed by the following command:
 
