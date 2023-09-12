@@ -59,15 +59,15 @@ To identify T-cell clubs, follow the instructions below based on your specific s
 
 If the cells come from a single sample/patient, run the Python script [TCRclub.py](TCRclub.py) using the following command:
 
-`python3 TCRclub.py --tcr_file ./example_data/example_tcr.csv --rna_file ./example_data/example_rna.csv`
+`python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv`
 
 If the cells come from multiple samples/patients, run python script [TCRclub.py](TCRclub.py) with with the additional *--multiple_sample* parameter:
 
-`python3 TCRclub.py --tcr_file ./example_data/example_tcr.csv --rna_file ./example_data/example_rna.csv --multiple_sample`
+`python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --multiple_sample`
 
 If you choose the fixed_initialization option, run python script [TCRclub.py](TCRclub.py) with the following command.
 
-`python3 TCRclub.py --tcr_file ./example_data/example_tcr.csv --rna_file ./example_data/example_rna.csv --fixed_initialization --repeat_times 1`
+`python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --fixed_initialization --repeat_times 1`
 
 The T-cell clubs will be saved in the "consensus_result.csv" file within the output directory specified by the *out* parameter. The output file will include a new column named "club" in the input TCR file, where T cells with the same club ID are considered to belong to the same club.
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/example_result_file.png)
