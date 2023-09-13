@@ -263,7 +263,8 @@ if __name__ == '__main__':
         clubproducer = TCRclub(TCR, RNA, k=args.k, alpha=args.alpha, beta=args.beta, fixed_ini=args.fixed_initialization)
         clubproducer.to()
         loss = clubproducer.loss()
-        print("The start loss is {}".format(loss))
+        #print("The start loss is {}".format(loss))
+        print("Start training {} epoch.".format(repeat_time+1))
         minloss = 1e+25
         prevloss = 0
         with torch.no_grad():
@@ -287,7 +288,8 @@ if __name__ == '__main__':
                     break
                 prevloss = loss
                 #torch.cuda.empty_cache()
-        print("The final loss is {}".format(minloss))
+        #print("The final loss is {}".format(minloss))
+        print("Finish training {} epoch.".format(repeat_time+1))
         
         results[repeat_time]['loss'] = minloss
         
