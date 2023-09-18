@@ -27,7 +27,7 @@ TCRclub includes a VAE model for converting CDR3β sequences into embeddings. To
 ### Input data
 TCRclub requires two files to identify functional-similar clubs for T cells. The first column of both files should be named "barcode", with each element being unique. Each row represents a single T cell, and the order of T cells should be the same in both files.
 
-For the sc-TCR sequences file, two columns are necessary: "barcode" and "cdr3". If the file contains cells from multiple samples, you should include a column labeled "sample" to indicate the source of each T cell.
+For the sc-TCR sequences file, two columns are necessary: "barcode" and "cdr3". If the file contains cells from multiple samples, you should include a column labeled "sample" to indicate the source of each T cell. Because of the structure of our autoencoder, CDR3 longer than 30 should be removed before using TCRclub.
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/required_tcr_file.png)
 
 **Fig.1** An example of required scTCR file in .csv format.
