@@ -314,10 +314,6 @@ if __name__ == '__main__':
             groups.append(np.argwhere(np.array(label) == i).reshape(-1))
         results[repeat_time]['clustering_result'] = groups
         
-    
-    tcr_file = tcr_file.reset_index()
-    out_file = tcr_file.copy()
-
 
     if not args.fixed_initialization:
         print("Generate consensus matrix ...")
@@ -349,7 +345,8 @@ if __name__ == '__main__':
         print("Directly generate results because initialization is fixed.")
         groups = results[0]['clustering_result']
 
-
+    tcr_file = tcr_file.reset_index()
+    out_file = tcr_file.copy()
     out_file["club"] = np.nan
     for cluster_ID, cluster in enumerate(groups):
         tcrs = unique_tcr_file.iloc[cluster].cdr3.tolist()  #tcr: cdr3:sample
