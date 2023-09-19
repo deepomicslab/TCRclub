@@ -68,6 +68,7 @@ class TCRclub():
         self.W_grads = torch.zeros(self.W.shape)
   
         if fixed_ini:
+            print("Initialization of C is fixed!")
             self.C = self.initialize_C()
         else:
             self.C = self.random_initialize() #default
@@ -316,30 +317,37 @@ if __name__ == '__main__':
     
     tcr_file = tcr_file.reset_index()
     out_file = tcr_file.copy()
-    clustered_idx = set(sum([list(row) for row in results[0]["clustering_result"]],[]))
-    clustered_idx = list(clustered_idx)
-    clustered_idx = np.array(clustered_idx)
 
-    top_loss = {}
-    puritys = defaultdict(list)
-    consensus_purity = {}
-    consensus_matrice = {}
-    consensus_judge = {}
-    combined_clusters = []
 
-    results = dict(sorted(results.items(), key=lambda x: x[1]["loss"]))
-    top_results = {k:v for i, (k, v) in enumerate(results.items()) if i in range(0,args.con_topk)}
-    
-    consensus_matrix = np.zeros((len(clustered_idx),len(clustered_idx)))
-    for key, values in top_results.items():
-        for cluster in values["clustering_result"]:
-            for a in np.arange(len(cluster)):
-                consensus_matrix[cluster[a]][cluster[a]] += 1
-                for b in np.arange(a+1, len(cluster)):
-                    consensus_matrix[cluster[a]][cluster[b]] += 1
-                    consensus_matrix[cluster[b]][cluster[a]] += 1
-    
-    groups = consensus_seat(consensus_matrix, cutoff=args.con_cutoff)
+    if not args.fixed_initialization:
+        print("Generate consensus matrix ...")
+        clustered_idx = set(sum([list(row) for row in results[0]["clustering_result"]],[]))
+        clustered_idx = list(clustered_idx)
+        clustered_idx = np.array(clustered_idx)
+
+        top_loss = {}
+        puritys = defaultdict(list)
+        consensus_purity = {}
+        consensus_matrice = {}
+        consensus_judge = {}
+        combined_clusters = []
+
+        results = dict(sorted(results.items(), key=lambda x: x[1]["loss"]))
+        top_results = {k:v for i, (k, v) in enumerate(results.items()) if i in range(0,args.con_topk)}
+        
+        consensus_matrix = np.zeros((len(clustered_idx),len(clustered_idx)))
+        for key, values in top_results.items():
+            for cluster in values["clustering_result"]:
+                for a in np.arange(len(cluster)):
+                    consensus_matrix[cluster[a]][cluster[a]] += 1
+                    for b in np.arange(a+1, len(cluster)):
+                        consensus_matrix[cluster[a]][cluster[b]] += 1
+                        consensus_matrix[cluster[b]][cluster[a]] += 1
+        
+        groups = consensus_seat(consensus_matrix, cutoff=args.con_cutoff)
+    else:
+        print("Directly generate results because initialization is fixed.")
+        groups = results[0]['clustering_result']
 
 
     out_file["club"] = np.nan
@@ -355,4 +363,3 @@ if __name__ == '__main__':
     
     print("Output file is ready.")
     out_file.to_csv(os.path.join(args.out, "consensus_result.csv"), index=False)
-
