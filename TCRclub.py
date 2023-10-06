@@ -240,10 +240,10 @@ if __name__ == '__main__':
     RR = np.matmul(R, R.T)
     rna = pd.DataFrame(RR) 
     rna['cdr3'] = tcr_file.reset_index()['cdr3']
-    RR_txn = rna.groupby('cdr3', sort=False).agg('mean')
+    RR_txn = rna.groupby('cdr3').agg('mean')
     rna = pd.DataFrame(RR_txn.values.T)
     rna['cdr3'] = tcr_file.reset_index()['cdr3']
-    RR_txt = rna.groupby('cdr3', sort=False).agg('mean')
+    RR_txt = rna.groupby('cdr3').agg('mean')
     u, sigma, vt = np.linalg.svd(RR_txt.values)
     if len(sigma) < len(RR_txt):
         S = np.diag(np.hstack(sigma, np.zeros(len(RR_txt)-len(sigma))))
