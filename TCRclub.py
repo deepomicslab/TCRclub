@@ -56,7 +56,7 @@ def consensus_seat(consensus_matrix, cutoff=0.002):
 
 
 class TCRclub():
-    def __init__(self, T, RR, k=5, alpha = 0, beta=0, fixed_ini=False):
+    def __init__(self, T, RR, k=5, beta=0, fixed_ini=False):
         self.TCR = T
         #self.R = R,
         self.RR = RR #n x n 
@@ -76,7 +76,6 @@ class TCRclub():
         #for optim_W
         self.Hpq = torch.zeros((f, f))
         self.Tip_Tjp = self.TCR.T.unsqueeze(-1) * self.TCR.T.unsqueeze(1) # f x n x n
-        self.alpha = torch.ones(n)*alpha
         self.beta = torch.diag(torch.ones(f)*beta)
     
     def initialize_C(self):
@@ -143,7 +142,7 @@ class TCRclub():
         loss_value = 0
         TWT = torch.matmul(torch.mul(self.TCR, self.W), self.TCR.T)  # n x n
         similarity = (self.RR - torch.mul(self.A, TWT)).pow(2)  # n x n
-        loss_value = torch.sum(torch.mul(self.C, similarity)) + self.alpha[0]*torch.sum(self.A.pow(2)) + self.beta[0][0]*torch.sum(self.W.pow(2))
+        loss_value = torch.sum(torch.mul(self.C, similarity)) + self.beta[0][0]*torch.sum(self.W.pow(2))
 
         return loss_value.item()
 
@@ -184,7 +183,7 @@ class TCRclub():
     def optim_A(self):
         W = self.W.detach()
         TWT = torch.matmul(torch.mul(self.TCR, W), self.TCR.T)
-        left = torch.sum(self.C * TWT.pow(2), dim=1) + self.alpha # n x 1
+        left = torch.sum(self.C * TWT.pow(2), dim=1) # n x 1
         right = torch.sum(self.C * TWT * self.RR, dim=1) # n x 1
         if torch.sum(left==0) != 0:
             return "break"
@@ -198,13 +197,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--tcr_file", type=str)
     parser.add_argument("--rna_file", type=str)
-    parser.add_argument("--k", type=int, default=5)
+    parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--repeat_times", type=int, default=50)
-    parser.add_argument("--alpha", type=float, default=1e-7)
     parser.add_argument("--beta", type=float, default=1e-7)
     parser.add_argument("--single_cutoff", type=float, default=0.0001)
-    parser.add_argument("--con_cutoff", type=float, default=0.002)
-    parser.add_argument("--con_topk", type=int, default=25, help="the topk results with smallest loss.")
+    parser.add_argument("--con_cutoff", type=float, default=0.0005)
+    parser.add_argument("--con_topk", type=int, default=15, help="the topk results with smallest loss.")
     parser.add_argument("--out", type=str, default="outputs")
     parser.add_argument("--multiple_sample", action='store_true')
     parser.add_argument("--fixed_initialization", action='store_true')
@@ -236,14 +234,14 @@ if __name__ == '__main__':
     print("TCR embeddings are prepared.")
 
     #obtain the pair-wise expression distances between TCR clones:RR
-    R = np.float32(rna_file.values)
+    R = np.float32(rna_file.values/np.linalg.norm(rna_file.values, axis=1, keepdims=True))
     RR = np.matmul(R, R.T)
     rna = pd.DataFrame(RR) 
     rna['cdr3'] = tcr_file.reset_index()['cdr3']
-    RR_txn = rna.groupby('cdr3').agg('mean')
+    RR_txn = rna.groupby('cdr3', sort=False).agg('mean')
     rna = pd.DataFrame(RR_txn.values.T)
     rna['cdr3'] = tcr_file.reset_index()['cdr3']
-    RR_txt = rna.groupby('cdr3').agg('mean')
+    RR_txt = rna.groupby('cdr3', sort=False).agg('mean')
     u, sigma, vt = np.linalg.svd(RR_txt.values)
     if len(sigma) < len(RR_txt):
         S = np.diag(np.hstack(sigma, np.zeros(len(RR_txt)-len(sigma))))
@@ -254,14 +252,14 @@ if __name__ == '__main__':
     if filter_RR.shape[0] != T.shape[0]:
         raise Exception("T cells in scRNA file are not matched with scTCR file. Please check your input files.")
     
-    TCR = torch.from_numpy(T/np.std(T,axis=0))
+    TCR = torch.from_numpy(T/np.linalg.norm(T, axis=1, keepdims=True))
     RNA = torch.from_numpy(filter_RR)
 
     results = defaultdict(dict)
     print("Starting clustering")
     for repeat_time in np.arange(args.repeat_times):
         epochs = 1000
-        clubproducer = TCRclub(TCR, RNA, k=args.k, alpha=args.alpha, beta=args.beta, fixed_ini=args.fixed_initialization)
+        clubproducer = TCRclub(TCR, RNA, k=args.k, beta=args.beta, fixed_ini=args.fixed_initialization)
         clubproducer.to()
         loss = clubproducer.loss()
         #print("The start loss is {}".format(loss))
