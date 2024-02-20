@@ -5,18 +5,22 @@ a tool to clustering T cells by integrating sc-RNA seq and sc-TCR seq on local h
 TCRclub is a novel approach that identifies the functional relevance of T cells at single-cell resolution. TCRclub receives scRNA expression and the numeric embeddings of the CDR3β sequences as inputs. It aims to bridge the gap between scRNA expression and TCRs by focusing on the inner relationship between T cells with similar functions. To achieve this, TCRclub models the relationship between pair-wise TCR embedding and pair-wise expression distances according to the local harmony. Local harmony means the nearby homogeneity existing in the local neighbours of any cell, since the neighbouring cells in the distance space are more likely to have similar characteristics and belong to the same category. By emphasizing local harmony, TCRclub reduces noise and increases the robustness of integration. Considering the built-in cell structure, TCRclub builds the T-cell hierarchy based on the distances updated by the integration and extracts the T-cell clubs. Finally, TCRclub repeats multiple times to obtain the consensus results of the clubs as the final output. 
 
 ## Prerequisite
-TCRclub is implemented in Python and requires a GPU. Please install the GPU version of PyTorch and TensorFlow before proceeding. We recommend executing the Python scripts using Linux shell commands.
+TCRclub is implemented in Python and requires a GPU. We recommend installing CUDA 11.6+CUDNN 8.1 or CUDA 11.2+CUDNN 8.0.
+Please install the GPU version of PyTorch and TensorFlow before proceeding. We recommend executing the Python scripts using Linux shell commands.
 
-### Python Packges
-To run TCRclub successfully, we recommend installing the following Python packages with their respective versions:
+## Environment Preparation
+There are two methods to prepare the environment for TCRclub. One is to create a conda environment based on the .Yaml file we provided, and the other is to install the python packages one by one in your own environment.
+### Create Conda Env based on .Yaml
+After cloning the repository, run `conda env create -f TCRclub.yml`. When using TCRclub, run `conda activate TCRclub` to activate the conda environment. 
+### Python Packages
+To run TCRclub successfully, we recommend installing the following Python packages in order with their respective versions:
 
-* tensorflow (version 2.5.0)
-* torch (version 1.12.0)
-* pandas (version 1.3.5)
-* scanpy (version 1.9.1)
-* numba (version 0.54.1)
 * pyseat (version 0.0.1.4)
-
+* tensorflow (version 2.6.0~2.9.0)
+* torch (version 1.13.0)
+* numba (version 0.59.0)
+* networkx (version 2.8.8)
+  
 [pySEAT](https://github.com/deepomicslab/SEAT) can be installed by the following command:
 
 `pip install pyseat`
