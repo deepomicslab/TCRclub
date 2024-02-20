@@ -47,13 +47,12 @@ TCRclub accepts several parameters, as listed in the table below:
 | ------------- | ------------- |
 | tcr_file | **(Required)** The path of the .csv file contains the scTCR sequences (see **Input data**). |
 | rna_file | **(Required)** The path of the .csv file contains the scRNA expression (see **Input data**). |
-| k | Number of selected neareast neighbours. Default: 5.|
+| k | Number of selected neareast neighbours. Default: 10.|
 | repeat_times  | Repeat times for obtaining the consensus results. Default: 50. Set to 1 if using *fixed_initialization*.|
-| alpha  | L2 regularization parameter. Default: 1e-7. |
 | beta  | L2 regularization parameter. Default: 1e-7. |
-| single_cutoff  | Cut-off parameter to split the cell hierarchy in a single run. Default: 1e-4. |
-| con_cutoff  | Cut-off parameter to split the cell hierarchy based on the consensus matrix . Default: 2e-3. |
-| con_topk  | Parameter to choose the number of results with the smallest loss from the repeat_times results to produce the consensus matrix. Default: 25. |
+| single_cutoff  | Cut-off parameter to split the cell hierarchy in a single run. It can be increased(decreased) for a higher(lower) clustering coverage of the individual result. Default: 1e-4. |
+| con_cutoff  | Cut-off parameter to split the cell hierarchy based on the consensus matrix. It can be increased(decreased) for a higher(lower) clustering coverage of the consensus result. Default: 5e-4. |
+| con_topk  | Parameter to choose the number of results with the smallest loss from the repeat_times results to produce the consensus matrix. Default: 15. |
 | out | Output directory name. |
 | multiple_sample  | A binary value indicating whether the input T cells are derived from different samples. If this parameter is selected, the input TCR file should contain a column specified as "sample". Default: False|
 | fixed_initialization | A binary value indicating whether the initialization of TCRclub starts in the default way (randomness). If this parameter is selected, the initialization of matrix C in TCRclub will be fixed. In this case, we suggest the parameter *repeat_times* should be set as 1. Default: False.|
