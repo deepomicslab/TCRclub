@@ -6,20 +6,38 @@ TCRclub is a novel approach that identifies the functional relevance of T cells 
 
 ## Prerequisite
 TCRclub is implemented in Python and requires a GPU for the acceleration. 
-Please install the GPU version of PyTorch and TensorFlow before proceeding. We recommend executing the Python scripts using Linux shell commands.
 
-## Environment Preparation
-We recommend CUDA11.2 and CUDA11.6 with cudnn8.1.0 for new users of CUDA. If you have prepared the CUDA, you need to ensure your CUDA environment supports TensorFlow (v2.6~v2.9).
+## Environment Setup
+For optimal performance, we recommend using CUDA versions 11.2 or 11.6 along with cudnn8.1.0. Ensure that your CUDA environment supports TensorFlow versions 2.6 to 2.9.
 
-We recommend to create a new environment by Annaconda in case your original environment could be changed. There are several ways to prepare the environment.
-### Use the provided Conda Env
+To avoid conflicts with your existing environment, we suggest creating a new Anaconda environment. There are several ways to set up the environment:
 
-### Create Conda Env
-* git clone the repository.
+1. ### Use Provided Conda Environment
+You can directly utilize the provided conda environment using the following instructions.
+
+```
+# Navigate to your anaconda3 directory 
+cd /home/XX/anaconda3/envs/
+ 
+mkdir -p TCRclub
+tar zxvf /<the path you store the provided .tar.gz>/TCRclubConda.tar.gz -C TCRclub
+source /home/XX/anaconda3/envs/TCRclub/bin/activate
+conda-unpack
+
+# Check the new environment
+conda env list
+## Output
+conda environments:
+base    */home/XX/anaconda3
+TCRclub /home/XX/anaconda3/envs/TCRclub
+```
+
+2. ### Create Conda Environment
+* Clone the repository.
 * Create a conda environment with python3.8 or python3.9, for example `conda create -n <Environment Name> python=3.8`
-* Activate the conda environment you just created. Enter into the directory of TCRclub, and run the install.sh under ./TCRclub.
-### Use Your Existed Env
-You can install the python packages by yourself in your existed environment. However, To run TCRclub successfully, we recommend installing the following Python packages in order with their respective versions:
+* Activate the conda environment you just created. Navigate to the TCRclub directory and execute [install.sh](./TCRclub/install.sh).
+3. ### Use Your Existing Environment
+You have the option to install the required Python packages manually in your existing environment. However, for successful execution of TCRclub, we recommend installing the following Python packages in sequential order along with their respective versions:
 
 * pyseat (version 0.0.1.4)
 * tensorflow (version 2.6.0~2.9.0)
