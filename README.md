@@ -5,15 +5,21 @@ a tool to clustering T cells by integrating sc-RNA seq and sc-TCR seq on local h
 TCRclub is a novel approach that identifies the functional relevance of T cells at single-cell resolution. TCRclub receives scRNA expression and the numeric embeddings of the CDR3β sequences as inputs. It aims to bridge the gap between scRNA expression and TCRs by focusing on the inner relationship between T cells with similar functions. To achieve this, TCRclub models the relationship between pair-wise TCR embedding and pair-wise expression distances according to the local harmony. Local harmony means the nearby homogeneity existing in the local neighbours of any cell, since the neighbouring cells in the distance space are more likely to have similar characteristics and belong to the same category. By emphasizing local harmony, TCRclub reduces noise and increases the robustness of integration. Considering the built-in cell structure, TCRclub builds the T-cell hierarchy based on the distances updated by the integration and extracts the T-cell clubs. Finally, TCRclub repeats multiple times to obtain the consensus results of the clubs as the final output. 
 
 ## Prerequisite
-TCRclub is implemented in Python and requires a GPU. We recommend installing CUDA 11.6+CUDNN 8.1 or CUDA 11.2+CUDNN 8.0.
+TCRclub is implemented in Python and requires a GPU for the acceleration. 
 Please install the GPU version of PyTorch and TensorFlow before proceeding. We recommend executing the Python scripts using Linux shell commands.
 
 ## Environment Preparation
-There are two methods to prepare the environment for TCRclub. One is to create a conda environment based on the .Yaml file we provided, and the other is to install the python packages one by one in your own environment.
-### Create Conda Env based on .Yaml
-After cloning the repository, run `conda env create -f TCRclub.yml`. When using TCRclub, run `conda activate TCRclub` to activate the conda environment. 
-### Python Packages
-To run TCRclub successfully, we recommend installing the following Python packages in order with their respective versions:
+We recommend CUDA11.2 and CUDA11.6 with cudnn8.1.0 for new users of CUDA. If you have prepared the CUDA, you need to ensure your CUDA environment supports TensorFlow (v2.6~v2.9).
+
+We recommend to create a new environment by Annaconda in case your original environment could be changed. There are several ways to prepare the environment.
+### Use the provided Conda Env
+
+### Create Conda Env
+* git clone the repository.
+* Create a conda environment with python3.8 or python3.9, for example `conda create -n <Environment Name> python=3.8`
+* Activate the conda environment you just created. Enter into the directory of TCRclub, and run the install.sh under ./TCRclub.
+### Use Your Existed Env
+You can install the python packages by yourself in your existed environment. However, To run TCRclub successfully, we recommend installing the following Python packages in order with their respective versions:
 
 * pyseat (version 0.0.1.4)
 * tensorflow (version 2.6.0~2.9.0)
