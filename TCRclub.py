@@ -203,6 +203,7 @@ if __name__ == '__main__':
     parser.add_argument("--single_cutoff", type=float, default=0.0001)
     parser.add_argument("--con_cutoff", type=float, default=0.0005)
     parser.add_argument("--con_topk", type=int, default=15, help="the topk results with smallest loss.")
+    parser.add_argument("--epochs", type=float, default=1000)
     parser.add_argument("--out", type=str, default="outputs")
     parser.add_argument("--multiple_sample", action='store_true')
     parser.add_argument("--fixed_initialization", action='store_true')
@@ -258,12 +259,12 @@ if __name__ == '__main__':
     results = defaultdict(dict)
     print("Starting clustering")
     for repeat_time in np.arange(args.repeat_times):
-        epochs = 1000
+        epochs = args.epochs
         clubproducer = TCRclub(TCR, RNA, k=args.k, beta=args.beta, fixed_ini=args.fixed_initialization)
         clubproducer.to()
         loss = clubproducer.loss()
         #print("The start loss is {}".format(loss))
-        print("Start training {} epoch.".format(repeat_time+1))
+        print("Start training {} times.".format(repeat_time+1))
         minloss = 1e+25
         prevloss = 0
         with torch.no_grad():
@@ -288,7 +289,7 @@ if __name__ == '__main__':
                 prevloss = loss
                 #torch.cuda.empty_cache()
         #print("The final loss is {}".format(minloss))
-        print("Finish training {} epoch.".format(repeat_time+1))
+        print("Finish training {} times.".format(repeat_time+1))
         
         results[repeat_time]['loss'] = minloss
         
