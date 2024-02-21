@@ -207,6 +207,7 @@ if __name__ == '__main__':
     parser.add_argument("--out", type=str, default="outputs")
     parser.add_argument("--multiple_sample", action='store_true')
     parser.add_argument("--fixed_initialization", action='store_true')
+    parser.add_argument("--CPU", action='store_true')
     args = parser.parse_args()
 
     setup_seed(0)
@@ -261,9 +262,10 @@ if __name__ == '__main__':
     for repeat_time in np.arange(args.repeat_times):
         epochs = args.epochs
         clubproducer = TCRclub(TCR, RNA, k=args.k, beta=args.beta, fixed_ini=args.fixed_initialization)
-        clubproducer.to()
+        if not args.CPU:
+            print("GPU Acceleration.")
+            clubproducer.to()
         loss = clubproducer.loss()
-        #print("The start loss is {}".format(loss))
         print("Start training {} times.".format(repeat_time+1))
         minloss = 1e+25
         prevloss = 0
@@ -299,7 +301,6 @@ if __name__ == '__main__':
         results[repeat_time]['W'] = clubproducer.W.cpu().numpy()
         
         X = distance + distance.T
-        #X = X / X.max()
         
         seat = SEAT(affinity="precomputed",
                     sparsification="affinity",
