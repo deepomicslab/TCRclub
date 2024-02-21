@@ -76,12 +76,15 @@ TCRclub accepts several parameters, as listed in the table below:
 | k | Number of selected neareast neighbours. Default: 10.|
 | repeat_times  | Repeat times for obtaining the consensus results. Default: 50. Set to 1 if using *fixed_initialization*.|
 | beta  | L2 regularization parameter. Default: 1e-7. |
-| single_cutoff  | Cut-off parameter to split the cell hierarchy in a single run. It can be increased(decreased) for a higher(lower) clustering coverage of the individual result. Default: 1e-4. |
-| con_cutoff  | Cut-off parameter to split the cell hierarchy based on the consensus matrix. It can be increased(decreased) for a higher(lower) clustering coverage of the consensus result. Default: 5e-4. |
+| single_cutoff  | Cut-off parameter to split the cell hierarchy in a single run. Default: 1e-4. |
+| con_cutoff  | Cut-off parameter to split the cell hierarchy based on the consensus matrix. Default: 5e-4. |
 | con_topk  | Parameter to choose the number of results with the smallest loss from the repeat_times results to produce the consensus matrix. Default: 15. |
 | out | Output directory name. |
+| epoch | Iterations for each execution to convergence. Default: 1000.|
 | multiple_sample  | A binary value indicating whether the input T cells are derived from different samples. If this parameter is selected, the input TCR file should contain a column specified as "sample". Default: False|
 | fixed_initialization | A binary value indicating whether the initialization of TCRclub starts in the default way (randomness). If this parameter is selected, the initialization of matrix C in TCRclub will be fixed. In this case, we suggest the parameter *repeat_times* should be set as 1. Default: False.|
+
+TCRclub has several hyper-parameters such as k, beta, single_cutoff and con_cutoff. For users seeking to fine-tune clustering coverage and its associated purity, adjusting the con_cutoff parameter is advised. This approach offers the quickest adjustment, allowing users to increase (or decrease) con_cutoff for higher (or lower) clustering coverage in the consensus result.
 
 ### Identifying T-cell clubs
 To identify T-cell clubs, follow the instructions below based on your specific scenario:
@@ -102,3 +105,4 @@ The T-cell clubs will be saved in the "consensus_result.csv" file within the out
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/example_result_file.png)
 **Fig.3** An example of the produced result in .csv format.
 
+[Tutorial](./tutorial.ipynb) is available to guide you through the process step by step.
