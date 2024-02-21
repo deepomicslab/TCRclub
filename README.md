@@ -5,7 +5,7 @@ a tool to clustering T cells by integrating sc-RNA seq and sc-TCR seq on local h
 TCRclub is a novel approach that identifies the functional relevance of T cells at single-cell resolution. TCRclub receives scRNA expression and the numeric embeddings of the CDR3β sequences as inputs. It aims to bridge the gap between scRNA expression and TCRs by focusing on the inner relationship between T cells with similar functions. To achieve this, TCRclub models the relationship between pair-wise TCR embedding and pair-wise expression distances according to the local harmony. Local harmony means the nearby homogeneity existing in the local neighbours of any cell, since the neighbouring cells in the distance space are more likely to have similar characteristics and belong to the same category. By emphasizing local harmony, TCRclub reduces noise and increases the robustness of integration. Considering the built-in cell structure, TCRclub builds the T-cell hierarchy based on the distances updated by the integration and extracts the T-cell clubs. Finally, TCRclub repeats multiple times to obtain the consensus results of the clubs as the final output. 
 
 ## Prerequisite
-TCRclub is implemented in Python and requires a GPU for the acceleration. 
+TCRclub is implemented in Python and requires a GPU for the acceleration. If you do not have a GPU, TCRclub can still be utilized with a CPU, but it may not meet speed expectations. 
 
 ## Environment Setup
 For optimal performance, we recommend using CUDA versions 11.2 or 11.6 along with cudnn8.1.0. Ensure that your CUDA environment supports TensorFlow versions 2.6 to 2.9.
@@ -28,8 +28,8 @@ conda-unpack
 conda env list
 ## Output
 conda environments:
-base    */home/XX/anaconda3
-TCRclub /home/XX/anaconda3/envs/TCRclub
+base    /home/XX/anaconda3
+TCRclub */home/XX/anaconda3/envs/TCRclub
 ```
 
 2. ### Create Conda Environment
@@ -83,10 +83,13 @@ TCRclub accepts several parameters, as listed in the table below:
 | epoch | Iterations for each execution to convergence. Default: 1000.|
 | multiple_sample  | A binary value indicating whether the input T cells are derived from different samples. If this parameter is selected, the input TCR file should contain a column specified as "sample". Default: False|
 | fixed_initialization | A binary value indicating whether the initialization of TCRclub starts in the default way (randomness). If this parameter is selected, the initialization of matrix C in TCRclub will be fixed. In this case, we suggest the parameter *repeat_times* should be set as 1. Default: False.|
+| CPU  |TCRclub runs on GPU by default. If you do not have access to a GPU, please select this parameter. Default: False|
 
 TCRclub has several hyper-parameters such as k, beta, single_cutoff and con_cutoff. For users seeking to fine-tune clustering coverage and its associated purity, adjusting the con_cutoff parameter is advised. This approach offers the quickest adjustment, allowing users to increase (or decrease) con_cutoff for higher (or lower) clustering coverage in the consensus result.
 
 ### Identifying T-cell clubs
+TCRclub runs on GPU by default. If you do not have access to a GPU, simply append --CPU to the end of the command.
+
 To identify T-cell clubs, follow the instructions below based on your specific scenario:
 
 If the cells come from a single sample/patient, run the Python script [TCRclub.py](TCRclub.py) using the following command:
