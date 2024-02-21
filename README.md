@@ -13,7 +13,7 @@ For optimal performance, we recommend using CUDA versions 11.2 or 11.6 along wit
 To avoid conflicts with your existing environment, we suggest creating a new Anaconda environment. There are several ways to set up the environment:
 
 1. ### Use Provided Conda Environment
-You can directly utilize the provided conda environment using the following instructions.
+You can directly utilize the provided conda environment [TCRclub](https://portland-my.sharepoint.com/:u:/g/personal/yipingzou2-c_my_cityu_edu_hk/EZiJGniELEtPvOFZZkrfPwEBpQ7VDfaLpMDRdeiTnN1ETg?e=CwoH2z) using the following instructions.
 
 ```
 # Navigate to your anaconda3 directory 
@@ -35,9 +35,9 @@ TCRclub /home/XX/anaconda3/envs/TCRclub
 2. ### Create Conda Environment
 * Clone the repository.
 * Create a conda environment with python3.8 or python3.9, for example `conda create -n <Environment Name> python=3.8`
-* Activate the conda environment you just created. Navigate to the TCRclub directory and execute [install.sh](./TCRclub/install.sh).
+* Activate the conda environment you just created. Navigate to the TCRclub directory and execute [install.sh](./install.sh).
 3. ### Use Your Existing Environment
-You have the option to install the required Python packages manually in your existing environment. However, for successful execution of TCRclub, we recommend installing the following Python packages in sequential order along with their respective versions:
+You have the option to install the required Python packages manually in your existing environment. However, for the successful execution of TCRclub, we recommend installing the following Python packages in sequential order along with their respective versions:
 
 * pyseat (version 0.0.1.4)
 * tensorflow (version 2.6.0~2.9.0)
@@ -55,15 +55,17 @@ TCRclub includes a VAE model for converting CDR3β sequences into embeddings. To
 ### Input data
 TCRclub requires two files to identify functional-similar clubs for T cells. The first column of both files should be named "barcode", with each element being unique. Each row represents a single T cell, and the order of T cells should be the same in both files.
 
-For the sc-TCR sequences file, two columns are necessary: "barcode" and "cdr3". If the file contains cells from multiple samples, you should include a column labeled "sample" to indicate the source of each T cell. Because of the structure of our autoencoder, CDR3 longer than 30 should be removed before using TCRclub.
+1. #### sc-TCR sequences file
+For the sc-TCR sequences file, two columns are necessary: "barcode" and "cdr3". If the file contains cells from multiple samples, you should include a column labelled "sample" to indicate the source of each T cell. Because of the structure of our autoencoder, CDR3 longer than 30 should be removed before using TCRclub.
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/required_tcr_file.png)
 
 **Fig.1** An example of required scTCR file in .csv format.
 
-For the sc-RNA expression file, each row corresponds to a T cell, and the columns (except the first column) correspond to genes. We suggest using the top 10% highly expressed genes extracted from the original sc-RNA expression file. You can select the input genes according to your own criteria. Normalization and log-transformation are recommended. Be cautious with selecting too many genes, as it may cause GPU memory issues.
+2. #### sc-RNA expression file
+For the sc-RNA expression file, each row corresponds to a T cell, and the columns (except the first column) correspond to genes. The first column should be named as "barcode". We suggest using the top 10% of highly expressed genes extracted from the original sc-RNA expression file. You can select the input genes according to your own criteria. Normalization and log-transformation are recommended. Be cautious with selecting too many genes, as it may cause GPU memory issues.
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/required_rna_file.png)
 
-**Fig.2** An example of required scRNA expression file in .csv format.
+**Fig.2** An example of a required scRNA expression file in .csv format.
 
 ### Parameters
 TCRclub accepts several parameters, as listed in the table below:
@@ -88,11 +90,11 @@ If the cells come from a single sample/patient, run the Python script [TCRclub.p
 
 `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv`
 
-If the cells come from multiple samples/patients, run python script [TCRclub.py](TCRclub.py) with with the additional *--multiple_sample* parameter:
+If the cells come from multiple samples/patients, run python script [TCRclub.py](TCRclub.py) with the additional *--multiple_sample* parameter:
 
 `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --multiple_sample`
 
-If you choose the fixed_initialization option, run python script [TCRclub.py](TCRclub.py) with the following command.
+If you choose the fixed_initialization option, run Python script [TCRclub.py](TCRclub.py) with the following command.
 
 `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --fixed_initialization --repeat_times 1`
 
