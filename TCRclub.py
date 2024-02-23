@@ -231,8 +231,9 @@ if __name__ == '__main__':
     K.clear_session()
     model = keras.models.load_model("autoencoder/TCRclub_embedding.h5", custom_objects={'Sampling1':Sampling1}, compile=False)
     T = model.predict(onehot)
-    cuda.select_device(0)
-    cuda.close()
+    if not args.CPU:
+        cuda.select_device(0)
+        cuda.close()
     print("TCR embeddings are prepared.")
 
     #obtain the pair-wise expression distances between TCR clones:RR
