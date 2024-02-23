@@ -119,4 +119,4 @@ The T-cell clubs will be saved in the "consensus_result.csv" file within the out
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/example_result_file.png)
 **Fig.3** An example of the produced result in .csv format.
 
-[Tutorial (on GPU）](./'tutorial(onGPU).ipynb') is available to guide you through the process step by step.
+[Tutorial (onGPU)](./tutorial(onGPU).ipynb) is available to guide you through the process step by step.
