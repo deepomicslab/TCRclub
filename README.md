@@ -5,10 +5,11 @@ a tool to clustering T cells by integrating sc-RNA seq and sc-TCR seq on local h
 TCRclub is a novel approach that identifies the functional relevance of T cells at single-cell resolution. TCRclub receives scRNA expression and the numeric embeddings of the CDR3β sequences as inputs. It aims to bridge the gap between scRNA expression and TCRs by focusing on the inner relationship between T cells with similar functions. To achieve this, TCRclub models the relationship between pair-wise TCR embedding and pair-wise expression distances according to the local harmony. Local harmony means the nearby homogeneity existing in the local neighbours of any cell, since the neighbouring cells in the distance space are more likely to have similar characteristics and belong to the same category. By emphasizing local harmony, TCRclub reduces noise and increases the robustness of integration. Considering the built-in cell structure, TCRclub builds the T-cell hierarchy based on the distances updated by the integration and extracts the T-cell clubs. Finally, TCRclub repeats multiple times to obtain the consensus results of the clubs as the final output. 
 
 ## Prerequisite
-TCRclub is implemented in Python and requires a GPU for the acceleration. If you do not have a GPU, TCRclub can still be utilized with a CPU, but it may not meet speed expectations. 
+TCRclub is implemented in Python and requires a GPU for the acceleration at default. we recommend using CUDA versions 11.2 or 11.6 along with cudnn8.1.0 for the users who have access to GPU. If you intend to utilize CUDA with different versions, please ensure compatibility of your CUDA environment with TensorFlow versions 2.6 to 2.9.
+
+If you do not have a GPU, TCRclub can still be utilized with a CPU, but it may not meet speed expectations. 
 
 ## Environment Setup
-For optimal performance, we recommend using CUDA versions 11.2 or 11.6 along with cudnn8.1.0. Ensure that your CUDA environment supports TensorFlow versions 2.6 to 2.9.
 
 To avoid conflicts with your existing environment, we suggest creating a new Anaconda environment. There are several ways to set up the environment:
 
