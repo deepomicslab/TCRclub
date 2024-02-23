@@ -35,7 +35,8 @@ TCRclub */home/XX/anaconda3/envs/TCRclub
 2. ### Create Conda Environment
 * Clone the repository.
 * Create a conda environment with python3.8 or python3.9, for example `conda create -n <Environment Name> python=3.8`
-* Activate the conda environment you just created. Navigate to the TCRclub directory and execute [install.sh](./install.sh).
+* Activate the conda environment you just created. Navigate to the TCRclub directory and execute [install.sh](./install.sh). Please note that in [install.sh](./install.sh), the version of PyTorch is 1.13.0 + CUDA 11.6, and the version of TensorFlow is 2.9.0. Ensure that the CUDA version in your environment is at least 11.2.
+
 3. ### Use Your Existing Environment
 You have the option to install the required Python packages manually in your existing environment. However, for the successful execution of TCRclub, we recommend installing the following Python packages in sequential order along with their respective versions:
 
@@ -88,24 +89,33 @@ TCRclub accepts several parameters, as listed in the table below:
 TCRclub has several hyper-parameters such as k, beta, single_cutoff and con_cutoff. For users seeking to fine-tune clustering coverage and its associated purity, adjusting the con_cutoff parameter is advised. This approach offers the quickest adjustment, allowing users to increase (or decrease) con_cutoff for higher (or lower) clustering coverage in the consensus result.
 
 ### Identifying T-cell clubs
-TCRclub runs on GPU by default. If you do not have access to a GPU, simply append --CPU to the end of the command.
+TCRclub runs on GPU by default. 
+
+If you do not have access to a GPU, simply append --CPU to the end of the command.
 
 To identify T-cell clubs, follow the instructions below based on your specific scenario:
 
-If the cells come from a single sample/patient, run the Python script [TCRclub.py](TCRclub.py) using the following command:
+1. If the cells come from a single sample/patient, run the Python script [TCRclub.py](TCRclub.py) using the following command:
 
 `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv`
 
-If the cells come from multiple samples/patients, run python script [TCRclub.py](TCRclub.py) with the additional *--multiple_sample* parameter:
+CPU command: `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --CPU`
+
+2. If the cells come from multiple samples/patients, run python script [TCRclub.py](TCRclub.py) with the additional *--multiple_sample* parameter:
 
 `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --multiple_sample`
 
-If you choose the fixed_initialization option, run Python script [TCRclub.py](TCRclub.py) with the following command.
+CPU command: `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --multiple_sample --CPU`
+
+3. If you choose the fixed_initialization option, run Python script [TCRclub.py](TCRclub.py) with the following command.
 
 `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --fixed_initialization --repeat_times 1`
+
+CPU command: `python3 TCRclub.py --tcr_file ./example_data/processed_tcr.csv --rna_file ./example_data/processed_rna.csv --fixed_initialization --repeat_times 1 --CPU`
+
 
 The T-cell clubs will be saved in the "consensus_result.csv" file within the output directory specified by the *out* parameter. The output file will include a new column named "club" in the input TCR file, where T cells with the same club ID are considered to belong to the same club.
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/example_result_file.png)
 **Fig.3** An example of the produced result in .csv format.
 
-[Tutorial](./tutorial.ipynb) is available to guide you through the process step by step.
+[Tutorial (on GPU）](./'tutorial(onGPU).ipynb') is available to guide you through the process step by step.
