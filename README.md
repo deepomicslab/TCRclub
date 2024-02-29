@@ -87,7 +87,7 @@ TCRclub accepts several parameters, as listed in the table below:
 | fixed_initialization | A binary value indicating whether the initialization of TCRclub starts in the default way (randomness). If this parameter is selected, the initialization of matrix C in TCRclub will be fixed. In this case, we suggest the parameter *repeat_times* should be set as 1. Default: False.|
 | CPU  |TCRclub runs on GPU by default. If you do not have access to a GPU, please select this parameter. Default: False|
 
-TCRclub has several hyper-parameters such as k, beta, single_cutoff and con_cutoff. For users seeking to fine-tune clustering coverage and its associated purity, adjusting the con_cutoff parameter is advised. This approach offers the quickest adjustment, allowing users to increase (or decrease) con_cutoff for higher (or lower) clustering coverage in the consensus result.
+TCRclub has several hyper-parameters such as k, beta, single_cutoff and con_cutoff. All of them can influence the clustering performance and can be adjusted. For users seeking to fine-tune clustering coverage and its associated purity as immediately as possible, adjusting the con_cutoff parameter is advised. This approach offers the quickest adjustment, allowing users to increase (or decrease) con_cutoff for higher (or lower) clustering coverage in the consensus result.
 
 ### Identifying T-cell clubs
 TCRclub runs on GPU by default. 
