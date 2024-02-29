@@ -36,7 +36,7 @@ TCRclub */home/XX/anaconda3/envs/TCRclub
 2. ### Create Conda Environment
 * Clone the repository.
 * Create a conda environment with python3.8 or python3.9, for example `conda create -n <Environment Name> python=3.8`
-* Activate the conda environment you just created. Navigate to the TCRclub directory and execute [install.sh](./install.sh). Please note that in [install.sh](./install.sh), the version of PyTorch is 1.13.0 + CUDA 11.6, and the version of TensorFlow is 2.9.0. Ensure that the CUDA version in your environment is at least 11.2.
+* Activate the conda environment you just created. Navigate to the TCRclub directory and execute [install.sh](./install.sh). Please note that in [install.sh](./install.sh), the default version of PyTorch is 1.13.0 + CUDA 11.6, and the version of TensorFlow is 2.9.0. If the CUDA version in your environment is not 11.6, you can reinstall the proper version of PyTorch and TensorFlow that are suitable for your CUDA version.
 
 3. ### Use Your Existing Environment
 You have the option to install the required Python packages manually in your existing environment. However, for the successful execution of TCRclub, we recommend installing the following Python packages in sequential order along with their respective versions:
