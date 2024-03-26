@@ -7,7 +7,7 @@ TCRclub is a novel approach that identifies the functional relevance of T cells 
 ## Prerequisite
 TCRclub is implemented in Python and requires a GPU for the acceleration at default. we recommend using CUDA versions 11.2 or 11.6 along with cudnn8.1.0 for the users who have access to GPU. If you intend to utilize CUDA with different versions, please ensure compatibility of your CUDA environment with TensorFlow versions 2.6 to 2.9.
 
-If you do not have a GPU, TCRclub can still be utilized with a CPU, but it may not meet speed expectations. For your convenience, you can also try our webpage interface [TIMEDB-TCRclub](https://timedb.deepomics.org/submit/tcrclub) ( Please note that due to high demand in the sever, it may take additional time to receive the output file. We are continuously working to update the server.)
+If you do not have a GPU, TCRclub can still be utilized with a CPU, but it may not meet speed expectations. For your convenience, you can also try our webpage interface [TIMEDB-TCRclub](https://timedb.deepomics.org/submit/tcrclub) ( Please note that the web-sever is not equipped with GPU. Due to high demand in the sever, it may take additional time to receive the output file. We are continuously working to update the server.)
 
 ## Environment Setup
 
