@@ -290,7 +290,7 @@ if __name__ == '__main__':
                 if np.abs(loss-prevloss) < 1e-3:
                     break
                 prevloss = loss
-                #torch.cuda.empty_cache()
+                torch.cuda.empty_cache()
         #print("The final loss is {}".format(minloss))
         print("Finish training {} times.".format(repeat_time+1))
         
