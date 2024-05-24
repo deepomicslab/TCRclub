@@ -2,8 +2,9 @@
 # coding: utf-8
 
 import argparse
-import tensorflow as tf
 import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+import tensorflow as tf
 import numpy as np
 import random
 from numba import cuda
