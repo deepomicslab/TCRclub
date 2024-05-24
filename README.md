@@ -14,7 +14,7 @@ If you do not have a GPU, TCRclub can still be utilized with a CPU, but it may n
 To avoid conflicts with your existing environment, we suggest creating a new Anaconda environment. There are several ways to set up the environment:
 
 1. ### Use Provided Conda Environment （Recommended)
-You can directly utilize the provided conda environment [TCRclub](https://portland-my.sharepoint.com/:u:/g/personal/yipingzou2-c_my_cityu_edu_hk/EZiJGniELEtPvOFZZkrfPwEBpQ7VDfaLpMDRdeiTnN1ETg?e=CwoH2z) using the following instructions.
+You can directly utilize the provided conda environment [TCRclub](https://portland-my.sharepoint.com/:u:/g/personal/yipingzou2-c_my_cityu_edu_hk/EZiJGniELEtPvOFZZkrfPwEBpQ7VDfaLpMDRdeiTnN1ETg?e=CwoH2z) or [TCRclub on google drive](https://drive.google.com/file/d/1uC5oGvHNLsc4RwwNavTicm0vZw02ts3d/view?usp=sharing) using the following instructions. If you encounter any download problems, please open an issue and let me know.
 
 ```
 # Navigate to your anaconda3 directory 
