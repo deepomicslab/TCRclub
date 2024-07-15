@@ -64,7 +64,7 @@ For the sc-TCR sequences file, two columns are necessary: "barcode" and "cdr3". 
 **Fig.1** An example of required scTCR file in .csv format.
 
 2. #### sc-RNA expression file
-For the sc-RNA expression file, each row corresponds to a T cell, and the columns (except the first column) correspond to genes. The first column should be named as "barcode". We suggest using the top 10% of highly expressed genes extracted from the original sc-RNA expression file. You can select the input genes according to your own criteria. Normalization and log-transformation are recommended. Be cautious with selecting too many genes, as it may cause GPU memory issues.
+For the sc-RNA expression file, each row corresponds to a T cell, and the columns (except the first column) correspond to genes. The first column should be named as "barcode". We suggest using the top 10% of highly variable genes extracted from the original sc-RNA expression file. You can select the input genes according to your own criteria. Normalization and log-transformation are recommended. Be cautious with selecting too many genes, as it may cause GPU memory issues.
 ![Image text](https://github.com/deepomicslab/TCRclub/blob/e48f9a7903811dd043a2e26f4402704a68c69bb1/img/required_rna_file.png)
 
 **Fig.2** An example of a required scRNA expression file in .csv format.
