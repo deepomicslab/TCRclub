@@ -120,3 +120,9 @@ The T-cell clubs will be saved in the "consensus_result.csv" file within the out
 **Fig.3** An example of the produced result in .csv format.
 
 [Tutorial (onGPU)](./tutorial(onGPU).ipynb) is available to guide you through the process step by step.
+
+## Reference and Citation
+If you used TCRclub in your project, please cite:
+
+Zou, Y., Luo, J., Chen, L., Wang, X., Liu, W., Wang, R. H., & Li, S. C. (2024). Identifying T-cell clubs by embracing the local harmony between TCR and gene expressions. Molecular Systems Biology, 1-17. [https://www.embopress.org/doi/full/10.1038/s44320-024-00070-5](https://www.embopress.org/doi/full/10.1038/s44320-024-00070-5)
+
